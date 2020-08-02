@@ -1,7 +1,7 @@
 {
-  "name": "react-big-scheduler",
+  "name": "react-mega-scheduler",
   "version": "0.2.7",
-  "description": "A scheduler and resource planning component built for React and made for modern browsers (IE10+)",
+  "description": "A react scheduler",
   "keywords": [
     "scheduler",
     "react-component",
@@ -17,15 +17,10 @@
     "CHANGELOG.md"
   ],
   "main": "lib/index",
-  "homepage": "https://github.com/StephenChou1017/react-big-scheduler",
-  "author": "Stephen Chou <27788280@qq.com> (https://github.com/StephenChou1017)",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:StephenChou1017/react-big-scheduler.git"
-  },
-  "bugs": {
-    "url": "http://github.com/StephenChou1017/react-big-scheduler/issues"
-  },
+  "homepage": "https://github.com/koxuan/react-mega-scheduler",
+  "author":  "(https://github.com/koxuan)",
+ 
+ 
   "license": "MIT",
   "config": {},
   "scripts": {
