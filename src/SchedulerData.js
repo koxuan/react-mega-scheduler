@@ -138,6 +138,8 @@ export default class SchedulerData {
     }
 
     next() {
+        console.log(this.startDate);
+        console.log(this.endDate);
         this._resolveDate(1);
         this.events = [];
         this._createHeaders();

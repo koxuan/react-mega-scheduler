@@ -10,7 +10,7 @@ module.exports = {
       'webpack-dev-server/client?http://localhost:8080/',
       'webpack/hot/only-dev-server',
       'babel-polyfill',
-      './example/bundle.js'
+      './demo/index.js'
     ]
   },
   output: {
