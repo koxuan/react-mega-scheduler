@@ -31,11 +31,13 @@ class Basic extends Component{
           },
       ];
         //let schedulerData = new SchedulerData(new moment("2017-12-18").format(DATE_FORMAT), ViewTypes.Week);
-        let schedulerData = new SchedulerData(new Date(), ViewTypes.Week, false, false,{eventItemPopoverEnabled: false,
-            customCellWidth: 20,
+        let today = new Date()
+        today.setHours(0,0,0,0);
+        let schedulerData = new SchedulerData(moment(today).add(9, 'hours').format(DATETIME_FORMAT),moment(today).add(18, 'hours').subtract(1, 'days').format(DATETIME_FORMAT),new Date(), ViewTypes.Custom, false, false,{eventItemPopoverEnabled: false,
+            customCellWidth: 12,
             views: [
                 {viewName: 'Daily Scheduling', viewType: ViewTypes.Custom, showAgenda: false, isEventPerspective: false},
-                {viewName: 'Weekly Scheduling', viewType: ViewTypes.Week, showAgenda: false, isEventPerspective: false},
+                // {viewName: 'Weekly Scheduling', viewType: ViewTypes.Week, showAgenda: false, isEventPerspective: false},
           
             ], // minuteStep: 15
         },{
@@ -47,8 +49,7 @@ class Basic extends Component{
         schedulerData.setResources(resources);
         // schedulerData.setEvents(DemoData.events);
         schedulerData.setMinuteStep(6);
-        let today = new Date()
-        today.setHours(0,0,0,0);
+     
         schedulerData.startDate = moment(today).add(9, 'hours').format(DATETIME_FORMAT)
         schedulerData.endDate = moment(today).add(18, 'hours').subtract(1, 'days').format(DATETIME_FORMAT)
         console.log(schedulerData.startDate)
@@ -87,9 +88,11 @@ class Basic extends Component{
 
     getCustomDate = (schedulerData, num, date = undefined) => {
 
+        
         return {
-            startDate:  moment(schedulerData.startDate).add(1, 'days').format(DATETIME_FORMAT),
-            endDate : moment(schedulerData.endDate).add(1, 'days').format(DATETIME_FORMAT),
+
+            startDate:  moment(schedulerData.startDate).add(num, 'days').format(DATETIME_FORMAT),
+            endDate : moment(schedulerData.endDate).add(num, 'days').format(DATETIME_FORMAT),
             cellUnit : CellUnits.Hour,
         };
 //         const {viewType} = schedulerData;
@@ -203,7 +206,8 @@ class Basic extends Component{
     };
 
     newEvent = (schedulerData, slotId, slotName, start, end, type, item) => {
-      
+      console.log(start)
+      console.log(end)
         let newFreshId = 0;
         schedulerData.events.forEach((item) => {
             if(item.id >= newFreshId)
