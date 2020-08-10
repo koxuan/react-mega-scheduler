@@ -1,6 +1,6 @@
 {
   "name": "react-mega-scheduler",
-  "version": "0.3.5",
+  "version": "0.3.7",
   "description": "A react scheduler",
   "keywords": [
     "scheduler",
@@ -33,6 +33,7 @@
   "pre-commit": [
     "lint"
   ],
+  "proxy": "https://localhost:5001",
   "dependencies": {
     "antd": "^3.16.6",
     "cpy": "^3.4.1",

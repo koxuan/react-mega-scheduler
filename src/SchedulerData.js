@@ -143,7 +143,11 @@ export default class SchedulerData {
         console.log(this.startDate);
         console.log(this.endDate);
         this._resolveDate(1);
-        this.events = [];
+        
+        this._createHeaders();
+        this._createRenderData();
+    }
+    refresh() {
         this._createHeaders();
         this._createRenderData();
     }

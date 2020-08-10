@@ -10,25 +10,25 @@ class Basic extends Component{
         super(props);
         let resources = [
         
-          {
-             id: 'r1',
-             name: 'StaffA'
-          },
-          {
-             id: 'r2',
-             name: 'StaffC',
+        //   {
+        //      id: 'r1',
+        //      name: 'StaffA'
+        //   },
+        //   {
+        //      id: 'r2',
+        //      name: 'StaffC',
           
-          },
-          {
-             id: 'r3',
-             name: 'ManagerB',
+        //   },
+        //   {
+        //      id: 'r3',
+        //      name: 'ManagerB',
         
-          },
-          {
-             id: 'r4',
-             name: 'ManagerA',
+        //   },
+        //   {
+        //      id: 'r4',
+        //      name: 'ManagerA',
             
-          },
+        //   },
       ];
         //let schedulerData = new SchedulerData(new moment("2017-12-18").format(DATE_FORMAT), ViewTypes.Week);
         let today = new Date()
@@ -57,6 +57,53 @@ class Basic extends Component{
         this.state = {
             viewModel: schedulerData
         }
+        this.schedulerData = schedulerData;
+    }
+
+    componentDidMount() {
+        // let resources = [   {
+        //     id: 'r1',
+        //     name: 'StaffA'
+        //  },
+        //  {
+        //     id: 'r2',
+        //     name: 'StaffC',
+         
+        //  },
+        //  {
+        //     id: 'r3',
+        //     name: 'ManagerB',
+       
+        //  },
+        //  {
+        //     id: 'r4',
+        //     name: 'ManagerA',
+           
+        //  },];
+
+        fetch('/staffs')
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        const resources = data.filter(x => {
+                return x.empStaffSgroup = 'T'
+            }).map(x => {
+        
+            return {id: x.empStaffId, name:x.empStaffName}
+          });
+        console.log()
+        this.number =  3
+        this.schedulerData.setResources(resources);
+        this.state = {
+            viewModel: this.schedulerData
+        }
+        this.schedulerData.setResources(resources);
+        this.state = {
+           viewModel: this.schedulerData
+       }
+       this.schedulerData.refresh();
+        });
+       
     }
 
     render(){
