@@ -24,17 +24,17 @@ module.exports = {
     extensions: ['*', '.js', '.jsx', '.es6'],
     modules: ['node_modules']
   },
-  devServer: {
-    historyApiFallback: true,
-    open: true,
-    port: 8080,
-    proxy: {
-      '*': {
-        target: 'https://localhost:5001',
-        secure: false
-    }
-    }
-  },
+  // devServer: {
+  //   historyApiFallback: true,
+  //   open: true,
+  //   // port: 8080,
+  //   // proxy: {
+  //   //   '*': {
+  //   //     target: 'https://localhost:5001',
+  //   //     secure: false
+  //   // }
+  //   }
+  // },
   module: {
   rules: [
     { test: /\.jsx$|\.es6$|\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ },
