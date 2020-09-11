@@ -91,6 +91,7 @@ class ResourceEvents extends Component {
         let pos = getPos(this.eventContainer);
         let startX = clientX - pos.x;
         let leftIndex = Math.floor(startX/cellWidth);
+        console.log(cellWidth)
         let left = leftIndex*cellWidth;
         let rightIndex = Math.ceil(startX/cellWidth);
         let width = (rightIndex - leftIndex)*cellWidth;
