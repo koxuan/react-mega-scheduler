@@ -43,7 +43,6 @@ class HeaderView extends Component {
                         const pList = pFormattedList.map((item, index) => (
                             <div key={index}>{item}</div>
                         ));
-
                         element = (
                             <th key={item.time} className="header3-text" style={style}>
                                 <div>
@@ -63,7 +62,7 @@ class HeaderView extends Component {
                 style = !!item.nonWorkingTime ? {width: cellWidth, color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {width: cellWidth};
                 if(index === headers.length - 1)
                     style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
-
+                   
                 let pFormattedList = config.nonAgendaOtherCellHeaderFormat.split('|').map(item => datetime.format(item));
 
                 if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {

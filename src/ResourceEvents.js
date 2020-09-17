@@ -7,6 +7,7 @@ import {CellUnits, DATETIME_FORMAT, SummaryPos} from './index'
 import {getPos} from './Util'
 import {DnDTypes} from './DnDTypes'
 const supportTouch = 'ontouchstart' in window;
+import moment from 'moment'
 
 class ResourceEvents extends Component {
 
@@ -88,13 +89,14 @@ class ResourceEvents extends Component {
 
         const {schedulerData} = this.props;
         let cellWidth = schedulerData.getContentCellWidth();
+        cellWidth = 90;
         let pos = getPos(this.eventContainer);
         let startX = clientX - pos.x;
         let leftIndex = Math.floor(startX/cellWidth);
-        console.log(cellWidth)
         let left = leftIndex*cellWidth;
         let rightIndex = Math.ceil(startX/cellWidth);
         let width = (rightIndex - leftIndex)*cellWidth;
+        
 
         this.setState({
             startX: startX,
@@ -138,11 +140,13 @@ class ResourceEvents extends Component {
         let cellWidth = schedulerData.getContentCellWidth();
         let pos = getPos(this.eventContainer);
         let currentX = clientX - pos.x;
+        cellWidth = 90;
         let leftIndex = Math.floor(Math.min(startX, currentX)/cellWidth);
         leftIndex = leftIndex < 0 ? 0 : leftIndex;
         let left = leftIndex*cellWidth;
         let rightIndex = Math.ceil(Math.max(startX, currentX)/cellWidth);
         rightIndex = rightIndex > headers.length ? headers.length : rightIndex;
+
         let width = (rightIndex - leftIndex)*cellWidth;
 
         this.setState({
@@ -170,8 +174,9 @@ class ResourceEvents extends Component {
         }
         document.onselectstart = null;
         document.ondragstart = null;
+        console.log(headers.filter(row => moment(row.time).hours() !== 13))
+        let startTime =headers.filter(row => moment(row.time).hours() !== 13)[leftIndex].time;
 
-        let startTime = headers[leftIndex].time;
         let endTime = resourceEvents.headerItems[rightIndex - 1].end;
         if(cellUnit !== CellUnits.Hour)
             endTime = localeMoment(resourceEvents.headerItems[rightIndex - 1].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
@@ -277,8 +282,10 @@ class ResourceEvents extends Component {
                         let eventEnd = localeMoment(evt.eventItem.end);
                         let isStart = eventStart >= durationStart;
                         let isEnd = eventEnd <= durationEnd;
+                        cellWidth = 90;
                         let left = index*cellWidth + (index > 0 ? 2 : 3);
-                        let width = (evt.span * cellWidth - (index > 0 ? 5 : 6)) > 0 ? (evt.span * cellWidth - (index > 0 ? 5 : 6)) : 0;
+                        let width = (evt.span * cellWidth - 24)
+                  
                         let top = marginTop + idx*config.eventItemLineHeight;
                         let eventItem = <DnDEventItem
                                                    {...this.props}

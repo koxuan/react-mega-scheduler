@@ -33,8 +33,8 @@ class Basic extends Component{
         //let schedulerData = new SchedulerData(new moment("2017-12-18").format(DATE_FORMAT), ViewTypes.Week);
         let today = new Date()
         today.setHours(0,0,0,0);
-        let schedulerData = new SchedulerData(moment(today).add(9, 'hours').format(DATETIME_FORMAT),moment(today).add(18, 'hours').subtract(1, 'days').format(DATETIME_FORMAT),new Date(), ViewTypes.Custom, false, false,{eventItemPopoverEnabled: false,
-           
+        let schedulerData = new SchedulerData(moment(today),moment(today).add(24, 'hours').format(DATETIME_FORMAT),new Date(), ViewTypes.Custom, false, false,{eventItemPopoverEnabled: false,
+           customCellWidth: 30,
             views: [
                 {viewName: 'Daily Scheduling', viewType: ViewTypes.Custom, showAgenda: false, isEventPerspective: false},
                 // {viewName: 'Weekly Scheduling', viewType: ViewTypes.Week, showAgenda: false, isEventPerspective: false},
@@ -42,7 +42,7 @@ class Basic extends Component{
             ], // minuteStep: 15
         },{
             getCustomDateFunc: this.getCustomDate,
-            getDateLabelFunc: this.getDateLabel,
+            //getDateLabelFunc: this.getDateLabel,
         });
         // schedulerData.localeMoment.locale('en');
        
@@ -50,8 +50,7 @@ class Basic extends Component{
         // schedulerData.setEvents(DemoData.events);
         schedulerData.setMinuteStep(60);
      
-        schedulerData.startDate = moment(today).add(9, 'hours').format(DATETIME_FORMAT)
-        schedulerData.endDate = moment(today).add(18, 'hours').subtract(1, 'days').format(DATETIME_FORMAT)
+     
         console.log(schedulerData.startDate)
         console.log(schedulerData.endDate)
         this.state = {
@@ -116,7 +115,10 @@ class Basic extends Component{
     }
 
         nonAgendaCellHeaderTemplateResolver = (schedulerData, item, formattedDateItems, style) => {
-            if(formattedDateItems[0] == '1pm')
+            if(formattedDateItems[0] == '1pm' || 
+            (formattedDateItems[0].includes('am') && (!formattedDateItems[0].includes(9) && !formattedDateItems[0].includes(11) &&!formattedDateItems[0].includes(10))) ||
+            (formattedDateItems[0].includes('pm') && (formattedDateItems[0].includes(7) || formattedDateItems[0].includes(8) || formattedDateItems[0].includes(9) || formattedDateItems[0].includes(10)|| formattedDateItems[0].includes(11)))
+            )
                 return ('');
             // console.log(schedulerData.startDate)
             // console.log(item.time)
@@ -124,7 +126,6 @@ class Basic extends Component{
             // formattedDateItems = [(moment(moment(item.time).diff(moment(schedulerData.startDate))).hours()-7).toString()]
       let datetime = schedulerData.localeMoment(item.time);
       let isCurrentDate = false;
-
       if (schedulerData.viewType === ViewTypes.Day) {
           isCurrentDate = datetime.isSame(new Date(), 'hour');
       }
@@ -136,9 +137,8 @@ class Basic extends Component{
         //   style.backgroundColor = '#118dea';
         //   style.color = 'white';
       }
-
       return (
-          <th key={item.time} className={`header3-text`} style={style}>
+          <th key={item.time} className={`header3-text`} >
               {
                   formattedDateItems.map((formattedItem, index) => (
                       <div key={index}
