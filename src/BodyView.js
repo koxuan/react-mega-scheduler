@@ -22,8 +22,8 @@ class BodyView extends Component {
             item.headerItems = (item.headerItems.filter(row => 
                 moment(row.time).hours() !== 13
             ));
-          
-            let rowCells = headers.filter(row => moment(row.time).hours() !== 13 && moment(row.time).hours() > 9 && moment(row.time).hours() < 19).map((header, index) => {
+            console.log(headers.filter(row => moment(row.time).hours() !== 13))
+            let rowCells = headers.filter(row => moment(row.time).hours() !== 13).map((header, index) => {
                 let key = item.slotId + '_' + header.time;
                 let style = index === headers.length - 1 ? {} : {width: cellWidth};
                 if(!!header.nonWorkingTime)
@@ -35,11 +35,14 @@ class BodyView extends Component {
                     if(!!cellBgColor)
                         style = {...style, backgroundColor: cellBgColor};
                 }
-            
+                console.log(moment(header.time).hours())
+                    
+                    console.log(style)
+                console.log(style)
                 return  <td key={key} ><div></div></td>
                 
             });
-         
+            console.log(rowCells)
             return (
                 <tr key={item.slotId} style={{height: item.rowHeight}}>
                     {rowCells}
