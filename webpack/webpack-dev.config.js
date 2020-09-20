@@ -7,7 +7,7 @@ module.exports = {
   mode:'development',
   entry: {
     'basic': [
-      'webpack-dev-server/client?http://localhost:8080/example',
+      'webpack-dev-server/client?http://localhost:8080/',
       'webpack/hot/only-dev-server',
       'babel-polyfill',
       './demo/index.js'
@@ -24,17 +24,6 @@ module.exports = {
     extensions: ['*', '.js', '.jsx', '.es6'],
     modules: ['node_modules']
   },
-  // devServer: {
-  //   historyApiFallback: true,
-  //   open: true,
-  //   // port: 8080,
-  //   // proxy: {
-  //   //   '*': {
-  //   //     target: 'https://localhost:5001',
-  //   //     secure: false
-  //   // }
-  //   }
-  // },
   module: {
   rules: [
     { test: /\.jsx$|\.es6$|\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ },

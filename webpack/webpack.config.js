@@ -14,14 +14,6 @@ module.exports = {
         path: root + "/exampledist/static",
         filename: '[name].js'
     },
-    devServer: {
-        historyApiFallback: true,
-        open: true,
-        port: 8081,
-        proxy: {
-          '/': 'https://localhost:5001'
-        }
-      },
     resolve: {
         extensions: ['*', '.js', '.jsx', '.es6'],
         modules: ['node_modules']
