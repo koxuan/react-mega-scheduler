@@ -35,13 +35,13 @@ class Basic extends Component{
             customCellWidth: 80,
             dayCellWidth:90,
             views: [
-                {viewName: 'Daily Scheduling', viewType: ViewTypes.Custom, showAgenda: false, isEventPerspective: false},
+                {viewName: 'Daily Scheduling', viewType: ViewTypes.Week, showAgenda: false, isEventPerspective: false},
               
           
             ], // minuteStep: 15
         },{
             getCustomDateFunc: this.getCustomDate,
-            getDateLabelFunc: this.getDateLabel,
+            //getDateLabelFunc: this.getDateLabel,
         });
         // schedulerData.localeMoment.locale('en');
        
@@ -58,7 +58,33 @@ class Basic extends Component{
             viewModel: schedulerData
         }
     }
+       nonAgendaCellHeaderTemplateResolver = (schedulerData, item, formattedDateItems, style) => {
+      let datetime = schedulerData.localeMoment(item.time);
+      let isCurrentDate = false;
 
+      if (schedulerData.viewType === ViewTypes.Day) {
+          isCurrentDate = datetime.isSame(new Date(), 'hour');
+      }
+      else {
+          isCurrentDate = datetime.isSame(new Date(), 'day');
+      }
+
+    //   if (isCurrentDate) {
+    //       style.backgroundColor = '#118dea';
+    //       style.color = 'white';
+    //   }
+
+      return (
+          <th key={item.time} className={`header3-text`} style={style}>
+              {
+                  formattedDateItems.map((formattedItem, index) => (
+                      <div key={index}
+                           dangerouslySetInnerHTML={{__html: formattedItem.replace(/[0-9]/g, '<b>$&</b>')}}/>
+                  ))
+              }
+          </th>
+      );
+  }
     render(){
         const {viewModel} = this.state;
         // console.log(DemoData.events);
@@ -79,6 +105,7 @@ class Basic extends Component{
                                updateEventEnd={this.updateEventEnd}
                                moveEvent={this.moveEvent}
                                newEvent={this.newEvent}
+                               nonAgendaCellHeaderTemplateResolver = {this.nonAgendaCellHeaderTemplateResolver}
                     />
                 </div>
             </div>
@@ -90,47 +117,10 @@ class Basic extends Component{
 
         return {
             startDate:  moment(schedulerData.startDate).startOf('day').format(DATETIME_FORMAT),
-            endDate : moment(schedulerData.endDate).startOf('day').add(7, 'days').format(DATETIME_FORMAT),
+            endDate : moment(schedulerData.endDate).startOf('day').add(6, 'days').format(DATETIME_FORMAT),
             cellUnit : CellUnits.Hour,
         };
-//         const {viewType} = schedulerData;
-//         let selectDate = schedulerData.startDate;
-//         if(date != undefined)
-//             selectDate = date;   
-// console.log(schedulerData.localeMoment(selectDate))
 
-//         let startDate = num === 0 ? selectDate : 
-//             schedulerData.localeMoment(selectDate).add(3, 'hours').format(DATETIME_FORMAT);
-//         let start =schedulerData.localeMoment(selectDate)._d;
-//         start.setHours(start.getHours() + 9);
-//         startDate = schedulerData.localeMoment(start).format(DATETIME_FORMAT);
-//        console.log(schedulerData.localeMoment(selectDate)._d)
-//         console.log( schedulerData.localeMoment(selectDate));
-//         let current = schedulerData.localeMoment(selectDate)._d;
-//         current.setDate(current.getDate() - 1)
-//         console.log(current.setHours(current.getHours() + 18))
-//         console.log(current)
-//         let endDate = schedulerData.localeMoment(current).format(DATETIME_FORMAT),
-//             cellUnit = CellUnits.Hour;
-        
-//             console.log(schedulerData.localeMoment(endDate))
-        // if(viewType === ViewTypes.Custom1) {
-        //     let monday = schedulerData.localeMoment(selectDate).startOf('week').format(DATE_FORMAT);
-        //     startDate = num === 0 ? monday : schedulerData.localeMoment(monday).add(num, 'weeks').format(DATE_FORMAT);
-        //     endDate = schedulerData.localeMoment(startDate).add(1, 'weeks').endOf('week').format(DATE_FORMAT);
-        //     cellUnit = CellUnits.Day;
-        // } else if(viewType === ViewTypes.Custom2) {
-        //     let firstDayOfMonth = schedulerData.localeMoment(selectDate).startOf('month').format(DATE_FORMAT);
-        //     startDate = num === 0 ? firstDayOfMonth : schedulerData.localeMoment(firstDayOfMonth).add(2*num, 'months').format(DATE_FORMAT);
-        //     endDate = schedulerData.localeMoment(startDate).add(1, 'months').endOf('month').format(DATE_FORMAT);
-        //     cellUnit = CellUnits.Day;
-        // }
-            
-        return {
-            // startDate,
-            // endDate,
-            // cellUnit
-        };
     }
 
     prevClick = (schedulerData)=> {

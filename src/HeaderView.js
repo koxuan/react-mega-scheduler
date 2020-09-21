@@ -25,21 +25,24 @@ class HeaderView extends Component {
         if(cellUnit === CellUnits.Hour){
             headers.forEach((item, index) => {
                 if(1||index % minuteStepsInHour === 0){
-                    console.log(item)
+                
                     
                     let datetime = localeMoment(item.time);
+                    
                     const isCurrentTime = datetime.isSame(new Date(), 'hour');
 
                     style = !!item.nonWorkingTime ? {width: cellWidth*minuteStepsInHour, color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {width: cellWidth*minuteStepsInHour};
 
                     if(index === headers.length - minuteStepsInHour)
                         style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
-
-                    let pFormattedList = config.nonAgendaDayCellHeaderFormat.split('|').map(item => datetime.format(item));
+                   config.nonAgendaDayCellHeaderFormat.split('|').map(item => {
+                        
+                        return datetime.format(item)})
+                    let pFormattedList = config.nonAgendaDayCellHeaderFormat.split('|').map(item => datetime.format('ddd M/D a'));
                     let element;
 
                     if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {
-                       
+                      
                         element = nonAgendaCellHeaderTemplateResolver(schedulerData, item, pFormattedList, style)
                     }
                     else {
@@ -64,10 +67,11 @@ class HeaderView extends Component {
         else {
             headerList = headers.map((item, index) => {
                 let datetime = localeMoment(item.time);
+                console.log(item)
                 style = !!item.nonWorkingTime ? {width: cellWidth, color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {width: cellWidth};
                 if(index === headers.length - 1)
                     style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
-
+                console.log(config.nonAgendaOtherCellHeaderFormat)
                 let pFormattedList = config.nonAgendaOtherCellHeaderFormat.split('|').map(item => datetime.format(item));
 
                 if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {
