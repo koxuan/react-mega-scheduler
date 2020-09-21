@@ -24,7 +24,9 @@ class HeaderView extends Component {
         let style = {};
         if(cellUnit === CellUnits.Hour){
             headers.forEach((item, index) => {
-                if(index % minuteStepsInHour === 0){
+                if(1||index % minuteStepsInHour === 0){
+                    console.log(item)
+                    
                     let datetime = localeMoment(item.time);
                     const isCurrentTime = datetime.isSame(new Date(), 'hour');
 
@@ -37,9 +39,11 @@ class HeaderView extends Component {
                     let element;
 
                     if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {
+                       
                         element = nonAgendaCellHeaderTemplateResolver(schedulerData, item, pFormattedList, style)
                     }
                     else {
+                       
                         const pList = pFormattedList.map((item, index) => (
                             <div key={index}>{item}</div>
                         ));
